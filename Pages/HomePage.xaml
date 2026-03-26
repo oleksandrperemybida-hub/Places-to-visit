@@ -44,6 +44,14 @@
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.1" Direction="270"/>
                             </Border.Effect>
+                            <Border.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="✅ Mark as visited" />
+                                    <MenuItem Header="⭐ Add to wishes"/>
+                                    <Separator />
+                                    <MenuItem Header="🗑️ Delete place" Foreground="Red" Click="DeletePlace_MenuItem_Click"/>
+                                </ContextMenu>
+                            </Border.ContextMenu>
 
                             <Grid>
                                 <Grid.RowDefinitions>

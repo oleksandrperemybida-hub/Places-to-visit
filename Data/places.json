@@ -1,8 +1,17 @@
 [
   {
     "Name": "Opole",
-    "Opis": "Piękne miasto",
+    "Opis": "Pi\u0119kne miasto",
     "ImageUrl": "/Images/opole1_169.jpg"
+  },
+  {
+    "Name": "Prague",
+    "Opis": "Capital of Czech Republic ",
+    "ImageUrl": "D:\\Semestr4\\Programowanie\\PlacesToVisit\\bin\\Debug\\net8.0-windows\\Images\\prague_169.jpg"
+  },
+  {
+    "Name": "Biograd-na-moru",
+    "Opis": "Croatia",
+    "ImageUrl": "D:\\Semestr4\\Programowanie\\PlacesToVisit\\bin\\Debug\\net8.0-windows\\Images\\5339353439898636679.jpg"
   }
-  
 ]
