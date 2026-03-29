@@ -77,5 +77,21 @@ namespace PlacesToVisit.Pages
                 }
             }
         }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = SearchBox.Text.ToLower(); // ToLower для того чтобы когда поиск был, он не зависил од большой/маленькой буквы
+            string filePath = "Data/places.json";
+
+            if (File.Exists(filePath)) 
+            {
+                string jsonString = File.ReadAllText(filePath);
+                List<Place> allPlaces = JsonSerializer.Deserialize<List<Place>>(jsonString) ?? new List<Place>();
+
+                var filtredPlaces = allPlaces.Where(p => p.Name.ToLower().Contains(searchText)).ToList();
+
+                PlacesList.ItemsSource = filtredPlaces;
+            }
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace PlacesToVisit.Pages
     /// </summary>
     public partial class AddPlacePage : Page
     {
-        // Змінна для збереження шляху вибраного файлу
         private string _selectedFilePath = "";
 
         public AddPlacePage()
@@ -21,7 +20,6 @@ namespace PlacesToVisit.Pages
             InitializeComponent();
         }
 
-        // Метод для кнопки "Вибрати фото"
         private void SelectImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -30,7 +28,7 @@ namespace PlacesToVisit.Pages
             if (openFileDialog.ShowDialog() == true)
             {
                 _selectedFilePath = openFileDialog.FileName;
-                ImageInput.Text = _selectedFilePath; // Показуємо шлях у текстовому полі
+                ImageInput.Text = _selectedFilePath; 
             }
         }
 
@@ -44,31 +42,25 @@ namespace PlacesToVisit.Pages
                 if (string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newOpis))
                 {
                     MessageBox.Show("Proszę wypełnić przynajmniej nazwę i opis", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return; // Зупиняємо код, щоб не зберігати пусту форму!
+                    return; 
                 }
 
                 string finalImagePath = "";
 
-                // Логіка копіювання картинки (якщо користувач її вибрав)
                 if (!string.IsNullOrEmpty(_selectedFilePath))
                 {
-                    // Створюємо папку Images біля запущеної програми
                     string targetFolder = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Images");
                     Directory.CreateDirectory(targetFolder);
 
-                    // Беремо ім'я файлу і створюємо новий шлях
                     string fileName = Path.GetFileName(_selectedFilePath);
                     string destinationPath = Path.Combine(targetFolder, fileName);
 
-                    // Копіюємо файл
                     File.Copy(_selectedFilePath, destinationPath, true);
 
-                    // Записуємо правильний відносний шлях для JSON
                     finalImagePath = destinationPath;
                 }
                 else
                 {
-                    // Якщо картинку не вибрали, записуємо те, що ввели вручну (або залишаємо пустим)
                     finalImagePath = ImageInput.Text;
                 }
 
@@ -99,7 +91,7 @@ namespace PlacesToVisit.Pages
 
                 MessageBox.Show("Success", "Success", MessageBoxButton.OK);
 
-                // Очищаємо форму після успішного збереження
+
                 NameInput.Clear();
                 DescriptionInput.Clear();
                 ImageInput.Clear();
