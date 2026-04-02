@@ -16,6 +16,7 @@ using System.Text.Json;
 using PlacesToVisit.Models;
 using System.IO;
 
+
 namespace PlacesToVisit.Pages
 {
     /// <summary>
@@ -80,7 +81,7 @@ namespace PlacesToVisit.Pages
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = SearchBox.Text.ToLower(); // ToLower для того чтобы когда поиск был, он не зависил од большой/маленькой буквы
+            string searchText = SearchBox.Text.ToLower();
             string filePath = "Data/places.json";
 
             if (File.Exists(filePath)) 
@@ -92,6 +93,16 @@ namespace PlacesToVisit.Pages
 
                 PlacesList.ItemsSource = filtredPlaces;
             }
+        }
+        private void PlaceClick_Card(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null) return;
+
+            Place clickedPlace = element.DataContext as Place;
+            if (clickedPlace == null) return;
+
+            this.NavigationService.Navigate(new DetailsPage(clickedPlace));
         }
     }
 }
