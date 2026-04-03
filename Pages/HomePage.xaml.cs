@@ -104,5 +104,52 @@ namespace PlacesToVisit.Pages
 
             this.NavigationService.Navigate(new DetailsPage(clickedPlace));
         }
+        private void MarkVisited_Click(object sender, RoutedEventArgs e) {
+            var menuItem = sender as MenuItem;
+            var place = menuItem.DataContext as Place;
+
+            if (place != null)
+            {
+                place.Status = "Visited";
+
+                SavePlacesToJson();
+
+                RefreshList();
+            }
+        }
+
+        private void SavePlacesToJson()
+        {
+            var allPlaces = PlacesList.ItemsSource as List<Place>;
+
+            if (allPlaces != null)
+            {
+                string filePath = "Data/places.json";
+                string jsonString = JsonSerializer.Serialize(allPlaces, new JsonSerializerOptions { WriteIndented = true });
+
+                File.WriteAllText(filePath, jsonString);
+            }
+        }
+        private void RefreshList()
+        {
+            var allPlaces = PlacesList.ItemsSource as List<Place>;
+
+            PlacesList.ItemsSource = null;
+            PlacesList.ItemsSource = allPlaces;
+        }
+
+        private void AddWish_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var place = menuItem.DataContext as Place;
+
+            if (place != null)
+            {
+                place.Status = "Wish";
+
+                SavePlacesToJson();
+                RefreshList();
+            }
+        }
     }
 }

@@ -46,8 +46,8 @@
                             </Border.Effect>
                             <Border.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="✅ Mark as visited" />
-                                    <MenuItem Header="⭐ Add to wishes"/>
+                                    <MenuItem Header="✅ Mark as visited" Click="MarkVisited_Click"/>
+                                    <MenuItem Header="⭐ Add to wishes" Click="AddWish_Click" />
                                     <Separator />
                                     <MenuItem Header="🗑️ Delete place" Foreground="Red" Click="DeletePlace_MenuItem_Click"/>
                                 </ContextMenu>
@@ -61,6 +61,30 @@
 
                                 <Border CornerRadius="10,10,0,0" ClipToBounds="True">
                                     <Image Source="{Binding ImageUrl}" Stretch="UniformToFill"/>
+                                </Border>
+                                <Border HorizontalAlignment="Right" 
+                                    VerticalAlignment="Top" 
+                                    Margin="10" 
+                                    CornerRadius="5" 
+                                    Padding="8,4">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#95A5A6"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Visited">
+                                                    <Setter Property="Background" Value="#27AE60"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Wish">
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <TextBlock Text="{Binding Status}" 
+                                       Foreground="White" 
+                                       FontWeight="Bold" 
+                                       FontSize="12"/>
                                 </Border>
 
                                 <StackPanel Grid.Row="1" Margin="15">
