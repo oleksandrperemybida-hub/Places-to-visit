@@ -24,11 +24,30 @@ namespace PlacesToVisit.Pages
     /// </summary>
     public partial class HomePage : Page
     {
-        public HomePage()
+        private string _currentFilter;
+        private List<Place> _allData;
+        public HomePage(string filter = "All")
         {
             InitializeComponent();
+            _currentFilter = filter;
+            TitleChange();
             LoadData();
 
+        }
+        private void TitleChange()
+        {
+            if (_currentFilter == "Visited")
+            {
+                PageTitle.Text = "Visited places";
+            }
+            else if (_currentFilter == "Wish")
+            {
+                PageTitle.Text = "My Wishlist";
+            }
+            else
+            {
+                PageTitle.Text = "All places";
+            }
         }
         private void LoadData()
         {
@@ -38,9 +57,20 @@ namespace PlacesToVisit.Pages
             {
                 string jsonString = File.ReadAllText(filePath);
                 // десеріалізація - перетворюємо текст у список об'єктів list<place>
-                List<Place> places = JsonSerializer.Deserialize<List<Place>>(jsonString);
+                _allData = JsonSerializer.Deserialize<List<Place>>(jsonString);
 
-                PlacesList.ItemsSource = places;
+                if (_currentFilter == "Visited")
+                {
+                    PlacesList.ItemsSource = _allData.Where(p => p.Status == "Visited").ToList();
+                }
+                else if (_currentFilter == "Wish")
+                {
+                    PlacesList.ItemsSource = _allData.Where(p => p.Status == "Wish").ToList();
+                }
+                else
+                {
+                    PlacesList.ItemsSource = _allData;
+                }
             }
         }
         private void DeletePlace_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -78,7 +108,6 @@ namespace PlacesToVisit.Pages
                 }
             }
         }
-
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = SearchBox.Text.ToLower();
@@ -120,12 +149,10 @@ namespace PlacesToVisit.Pages
 
         private void SavePlacesToJson()
         {
-            var allPlaces = PlacesList.ItemsSource as List<Place>;
-
-            if (allPlaces != null)
+            if (_allData != null)
             {
                 string filePath = "Data/places.json";
-                string jsonString = JsonSerializer.Serialize(allPlaces, new JsonSerializerOptions { WriteIndented = true });
+                string jsonString = JsonSerializer.Serialize(_allData, new JsonSerializerOptions { WriteIndented = true });
 
                 File.WriteAllText(filePath, jsonString);
             }
@@ -137,7 +164,6 @@ namespace PlacesToVisit.Pages
             PlacesList.ItemsSource = null;
             PlacesList.ItemsSource = allPlaces;
         }
-
         private void AddWish_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuItem;
@@ -151,5 +177,6 @@ namespace PlacesToVisit.Pages
                 RefreshList();
             }
         }
+
     }
 }

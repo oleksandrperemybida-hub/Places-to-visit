@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="All places" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+            <TextBlock x:Name="PageTitle" Text="All places" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
 
             <Border Grid.Column="1" Background="White" CornerRadius="5" BorderBrush="#E0E0E0" BorderThickness="1" Height="35">
                 <TextBox x:Name="SearchBox" 

@@ -24,10 +24,22 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new HomePage());
     }
     private void AllPlaces_Click(object sender, RoutedEventArgs e) {
-        MainFrame.Navigate(new Pages.HomePage());
+        MainFrame.Navigate(new HomePage());
     }
     private void AddPlaces_Click(object sender, RoutedEventArgs e)
     {
-        MainFrame.Navigate(new Pages.AddPlacePage());
+        MainFrame.Navigate(new AddPlacePage());
+    }
+    private void NavAll_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new HomePage("All"));
+    }
+    private void NavVisited_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new HomePage("Visited"));
+    }
+    private void NavWish_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new HomePage("Wish"));
     }
 }
