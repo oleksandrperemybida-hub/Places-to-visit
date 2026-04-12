@@ -45,7 +45,7 @@
                         BorderThickness="0"
                         Cursor="Hand"/>
 
-                <Button Content="⚙️ Properties" 
+                <Button Content="⚙️ Properties" Click="Properties_Click" 
                         Height="45" 
                         FontSize="16" 
                         Background="#34495E" 
