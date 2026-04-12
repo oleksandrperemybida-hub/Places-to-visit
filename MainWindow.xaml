@@ -33,9 +33,10 @@
                         Cursor="Hand"/>
                 <Button Content="All places" Click="NavAll_Click" Margin="0,0,0,0" Foreground="AliceBlue" Background="#34495E"/>
                 <Button Content="Visited" Click="NavVisited_Click" Margin="0,5,0,0" Foreground="AliceBlue" Background="#34495E"/>
-                <Button Content="Wishlist" Click="NavWish_Click" Margin="0,5,0,15" Foreground="AliceBlue" Background="#34495E"/>
+                <Button Content="Wishlist" Click="NavWish_Click" Margin="0,5,0,0" Foreground="AliceBlue" Background="#34495E"/>
+                <Button Content="Saved" Click="NavSaved_Click" Margin="0,5,0,15" Foreground="AliceBlue" Background="#34495E"/>
 
-                <Button Content="➕ Add places" Click="AddPlaces_Click" 
+                <Button Content="Add place" Click="AddPlaces_Click" 
                         Height="45" 
                         Margin="0,0,0,15" 
                         FontSize="16" 

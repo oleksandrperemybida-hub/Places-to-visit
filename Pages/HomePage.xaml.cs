@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Text.Json;
 using PlacesToVisit.Models;
 using System.IO;
+using PlacesToVisit.Pages;
 
 
 namespace PlacesToVisit.Pages
@@ -44,6 +45,10 @@ namespace PlacesToVisit.Pages
             {
                 PageTitle.Text = "My Wishlist";
             }
+            else if (_currentFilter == "Saved")
+            {
+                PageTitle.Text = "Saved places";
+            }
             else
             {
                 PageTitle.Text = "All places";
@@ -67,13 +72,39 @@ namespace PlacesToVisit.Pages
                 {
                     PlacesList.ItemsSource = _allData.Where(p => p.Status == "Wish").ToList();
                 }
+                else if (_currentFilter == "Saved")
+                {
+                    PlacesList.ItemsSource = _allData.Where(p => p.Status == "Saved").ToList();
+                }
                 else
                 {
                     PlacesList.ItemsSource = _allData;
                 }
             }
+
+            var currentList = PlacesList.ItemsSource as List<Place>;
+
+            if (currentList == null || currentList.Count == 0)
+            {
+                PlacesList.Visibility = Visibility.Collapsed;
+                EmptyStatePanel.Visibility = Visibility.Visible;
+
+                if (_currentFilter == "Visited")
+                    EmptyStateText.Text = "You haven't visited any places yet.";
+                else if (_currentFilter == "Wish")
+                    EmptyStateText.Text = "Your wish list is empty.";
+                else if (_currentFilter == "Saved")
+                    EmptyStateText.Text = "No saved places";
+                else
+                    EmptyStateText.Text = "Add your first place";
+            }
+            else
+            {
+                PlacesList.Visibility = Visibility.Visible;
+                EmptyStatePanel.Visibility = Visibility.Collapsed;
+            }
         }
-        private void DeletePlace_MenuItem_Click(object sender, RoutedEventArgs e)
+        private void DeletePlace_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             if (menuItem == null) return;
@@ -175,6 +206,28 @@ namespace PlacesToVisit.Pages
 
                 SavePlacesToJson();
                 RefreshList();
+            }
+        }
+        private void MarkSaved_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var place = menuItem.DataContext as Place;
+
+            if (place != null)
+            {
+                place.Status = "Saved";
+                SavePlacesToJson();
+                RefreshList();
+            }
+        }
+        private void EditPlace_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var place = menuItem.DataContext as Place;
+
+            if (place != null)
+            {
+                NavigationService.Navigate(new AddPlacePage(place));
             }
         }
 

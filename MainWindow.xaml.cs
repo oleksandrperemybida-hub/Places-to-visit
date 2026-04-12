@@ -42,4 +42,8 @@ public partial class MainWindow : Window
     {
         MainFrame.Navigate(new HomePage("Wish"));
     }
+    private void NavSaved_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new HomePage("Saved"));
+    }
 }

@@ -14,10 +14,19 @@ namespace PlacesToVisit.Pages
     public partial class AddPlacePage : Page
     {
         private string _selectedFilePath = "";
-
-        public AddPlacePage()
+        private Place _placeToEdit;
+        public AddPlacePage(Place placeToEdit = null)
         {
             InitializeComponent();
+
+            _placeToEdit = placeToEdit;
+            if (_placeToEdit != null)
+            {
+                NameInput.Text = _placeToEdit.Name;
+                DescriptionInput.Text = _placeToEdit.Opis;
+                ImageInput.Text = _placeToEdit.ImageUrl;
+                SaveButton.Content = "Save changes";
+            }
         }
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
@@ -64,15 +73,8 @@ namespace PlacesToVisit.Pages
                     finalImagePath = ImageInput.Text;
                 }
 
-                Place newPlace = new Place()
-                {
-                    Name = newName,
-                    Opis = newOpis,
-                    ImageUrl = finalImagePath
-                };
-
                 string filePath = "Data/places.json";
-                List<Place>? places = new List<Place>();
+                List<Place> places = new List<Place>();
 
                 if (File.Exists(filePath))
                 {
@@ -83,7 +85,26 @@ namespace PlacesToVisit.Pages
                     }
                 }
 
-                places.Add(newPlace);
+                if (_placeToEdit != null) {
+                    var placeToUpdate = places.FirstOrDefault(p => p.Name == _placeToEdit.Name && p.Opis == _placeToEdit.Opis);
+
+                    if (placeToUpdate != null)
+                    {
+                        placeToUpdate.Name = newName;
+                        placeToUpdate.Opis = newOpis;
+                        placeToUpdate.ImageUrl = finalImagePath;
+                    }
+                }
+                else {
+                    Place newPlace = new Place()
+                    {
+                        Name = newName,
+                        Opis = newOpis,
+                        ImageUrl = finalImagePath,
+                        Status = "Saved"
+                    };
+                    places.Add(newPlace);
+                }
 
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string newJsonString = JsonSerializer.Serialize(places, options);
@@ -96,6 +117,9 @@ namespace PlacesToVisit.Pages
                 DescriptionInput.Clear();
                 ImageInput.Clear();
                 _selectedFilePath = "";
+
+                _placeToEdit = null;
+                SaveButton.Content = "Save place";
             }
             
             catch 
